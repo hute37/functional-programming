@@ -1,5 +1,3 @@
-declare var process: any
-
 export class IO<A> {
   static of<B>(b: B): IO<B> {
     return new IO(() => b)
@@ -15,19 +13,9 @@ export class IO<A> {
     return mmb.run()
   }
   chain<B>(f: (a: A) => IO<B>): IO<B> {
-    return f(this.run())
+    return new IO(() => f(this.run()).run())
+  }
+  ap<B>(fab: IO<(a: A) => B>): IO<B> {
+    return new IO(() => fab.run()(this.run()))
   }
 }
-
-export function getLine(): IO<string> {
-  return new IO(() => process.argv[2] || '')
-}
-
-export function putStrLn(s: string): IO<void> {
-  return new IO(() => console.log(s))
-}
-
-// program :: IO<void>
-const program = getLine().chain(putStrLn)
-
-// program.run()

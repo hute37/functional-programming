@@ -6,8 +6,6 @@ Giorno III
 - Monadi
   - A cosa servono e definizione
   - Capire le monadi attraverso le categorie di Kleisli
-- Hands on
-  - definiamo e implementiamo le monadi più comuni
 
 # Come si gestiscono i side effect?
 
@@ -47,7 +45,7 @@ function sum(a: number, b: number): () => number {
 }
 ```
 
-Dunque la procedura non esegue immediatamente il side effect ma resituisce un valore che ne rappresenta il contenuto. Analogamente `Promise<A>` rappresenta un valore che sarà a disposizione nel funturo.
+Dunque la procedura non esegue immediatamente il side effect ma resituisce un valore che ne rappresenta il contenuto. Analogamente `Promise<A>` rappresenta un valore che sarà a disposizione nel futuro.
 
 Introduciamo un type alias per rendere più esplicito il fatto che la funzione restituisce una "azione"
 
@@ -67,7 +65,7 @@ In questo modo siamo riusciti a codificare il concetto astratto di procedura che
 Vediamo un altro esempio: leggere e scrivere sul `localStorage`
 
 ```ts
-function read(name: string): IO<string | undefined> {
+function read(name: string): IO<string | null> {
   return () => localStorage.getItem(name)
 }
 
@@ -262,7 +260,7 @@ Inoltre devono valere le seguenti leggi:
 
 Nota.
 
-- sinonimi di `of` sono `return` (Haskell o PureScript), `pure` (Scala), `point`
+- sinonimi di `of` sono `return` (Haskell), `pure` (Scala o PureScript), `point`
 - sinonimi di `chain` sono `bind` (Haskell o PureScript), `flatMap` (Scala).
 
 Domande:
